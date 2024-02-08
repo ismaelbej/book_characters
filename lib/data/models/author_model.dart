@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import '../../domain/entities/author.dart';
 
-class AuthorModel {
+class AuthorModel extends Equatable {
   final String name;
   final String bio;
 
@@ -26,4 +28,10 @@ class AuthorModel {
         name: name,
         bio: bio,
       );
+
+  @override
+  List<Object> get props => [name, bio];
+
+  @override
+  bool get stringify => true;
 }
