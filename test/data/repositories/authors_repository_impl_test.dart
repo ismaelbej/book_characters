@@ -32,6 +32,7 @@ void main() {
       final result = await authorsRepository.addAuthor(author);
 
       expect(result, expected);
+      verify(() => authorsDatasource.addAuthor(authorModel)).called(1);
     });
 
     test("should remove an author", () async {
@@ -43,6 +44,7 @@ void main() {
       final result = await authorsRepository.removeAuthor(author);
 
       expect(result, expected);
+      verify(() => authorsDatasource.removeAuthor(authorModel)).called(1);
     });
 
     test("should return all authors", () async {
@@ -55,6 +57,7 @@ void main() {
 
       expect(result.isLeft, expected.isLeft);
       expect(result.left, expected.left);
+      verify(() => authorsDatasource.getAuthors()).called(1);
     });
   });
 }
