@@ -14,8 +14,8 @@ void main() {
 
     late AuthorsDatasource authorsDatasource;
 
-    const author = Author(name: "name", bio: "bio");
-    const authorModel = AuthorModel(name: "name", bio: "bio");
+    const author = Author(name: "name", image: "image");
+    const authorModel = AuthorModel(name: "name", image: "image");
 
     setUp(() {
       authorsDatasource = MockAuthorsDatasource();

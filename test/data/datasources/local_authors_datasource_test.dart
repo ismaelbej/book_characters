@@ -17,7 +17,7 @@ void main() {
     late StreamingSharedPreferences sharedPreferences;
     late MockPreferenceAuthors preferenceAuthors;
 
-    const authorModel = AuthorModel(name: "name", bio: "bio");
+    const authorModel = AuthorModel(name: "name", image: "bio");
 
     setUp(() {
       preferenceAuthors = MockPreferenceAuthors();

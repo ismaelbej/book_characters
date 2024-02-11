@@ -4,33 +4,33 @@ import '../../domain/entities/author.dart';
 
 class AuthorModel extends Equatable {
   final String name;
-  final String bio;
+  final String image;
 
   const AuthorModel({
     required this.name,
-    required this.bio,
+    required this.image,
   });
 
   AuthorModel.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        bio = json['bio'];
+        image = json['image'];
 
   Map<String, dynamic> toJson() => {
         'name': name,
-        'bio': bio,
+        'image': image,
       };
 
   AuthorModel.fromAuthor(Author author)
       : name = author.name,
-        bio = author.bio;
+        image = author.image;
 
   Author toAuthor() => Author(
         name: name,
-        bio: bio,
+        image: image,
       );
 
   @override
-  List<Object> get props => [name, bio];
+  List<Object> get props => [name, image];
 
   @override
   bool get stringify => true;
