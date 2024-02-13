@@ -34,7 +34,7 @@ void main() {
           LocalAuthorsDatasource(sharedPreferences: sharedPreferences);
     });
 
-    test("should add an author", () async {
+    test("should return true to add an author", () async {
       const expected = true;
 
       when(() => preferenceAuthors.getValue()).thenReturn([]);
@@ -48,7 +48,7 @@ void main() {
       verify(() => preferenceAuthors.setValue([authorModel])).called(1);
     });
 
-    test("should remove an author", () async {
+    test("should return true to remove an author", () async {
       const expected = true;
 
       when(() => preferenceAuthors.getValue()).thenReturn([authorModel]);

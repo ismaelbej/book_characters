@@ -23,7 +23,7 @@ void main() {
           AuthorsRepositoryImpl(authorsDatasource: authorsDatasource);
     });
 
-    test("should add an author", () async {
+    test("should return true to add an author", () async {
       const expected = Left(true);
 
       when(() => authorsDatasource.addAuthor(authorModel))
@@ -35,7 +35,7 @@ void main() {
       verify(() => authorsDatasource.addAuthor(authorModel)).called(1);
     });
 
-    test("should remove an author", () async {
+    test("should return true to remove an author", () async {
       const expected = Left(true);
 
       when(() => authorsDatasource.removeAuthor(authorModel))
