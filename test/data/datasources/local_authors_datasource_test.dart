@@ -30,8 +30,8 @@ void main() {
         ),
       ).thenAnswer((invocation) => preferenceAuthors);
 
-      authorsDatasource =
-          LocalAuthorsDatasource(sharedPreferences: sharedPreferences);
+      authorsDatasource = LocalAuthorsDatasource(
+          sharedPreferences: Future.value(sharedPreferences));
     });
 
     test("should return true to add an author", () async {
@@ -44,7 +44,7 @@ void main() {
       final result = await authorsDatasource.addAuthor(authorModel);
 
       expect(result, expected);
-      verify(() => preferenceAuthors.getValue()).called(2);
+      verify(() => preferenceAuthors.getValue()).called(1);
       verify(() => preferenceAuthors.setValue([authorModel])).called(1);
     });
 
@@ -58,7 +58,7 @@ void main() {
       final result = await authorsDatasource.removeAuthor(authorModel);
 
       expect(result, expected);
-      verify(() => preferenceAuthors.getValue()).called(2);
+      verify(() => preferenceAuthors.getValue()).called(1);
       verify(() => preferenceAuthors.setValue([])).called(1);
     });
 

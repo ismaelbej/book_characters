@@ -6,7 +6,8 @@ import '../../models/author_model.dart';
 import '../authors_datasource.dart';
 
 class LocalAuthorsDatasource implements AuthorsDatasource {
-  final Preference<List<AuthorModel>> _authors;
+  late final Future<StreamingSharedPreferences> sharedPreferences;
+  late final Preference<List<AuthorModel>> _authors;
 
   List<AuthorModel> get authors => _authors.getValue();
 
@@ -19,20 +20,22 @@ class LocalAuthorsDatasource implements AuthorsDatasource {
         authors.map((author) => jsonEncode(author.toJson())).toList(),
   );
 
-  LocalAuthorsDatasource({
-    required StreamingSharedPreferences sharedPreferences,
-  }) : _authors = sharedPreferences.getCustomValue(
-          authorsKey,
-          defaultValue: <AuthorModel>[],
-          adapter: authorsListAdapter,
-        );
+  LocalAuthorsDatasource({required this.sharedPreferences}) {
+    init();
+  }
+
+  void init() async {
+    final sharedPreferences = await this.sharedPreferences;
+    _authors = sharedPreferences.getCustomValue(
+      authorsKey,
+      defaultValue: <AuthorModel>[],
+      adapter: authorsListAdapter,
+    );
+  }
 
   @override
   Future<bool> addAuthor(AuthorModel author) async {
-    if (!authors.contains(author)) {
-      return _authors.setValue(List<AuthorModel>.of(authors)..add(author));
-    }
-    return true;
+    return _authors.setValue(List<AuthorModel>.of(authors)..add(author));
   }
 
   @override
@@ -42,9 +45,6 @@ class LocalAuthorsDatasource implements AuthorsDatasource {
 
   @override
   Future<bool> removeAuthor(AuthorModel author) async {
-    if (authors.contains(author)) {
-      return _authors.setValue(List<AuthorModel>.of(authors)..remove(author));
-    }
-    return true;
+    return _authors.setValue(List<AuthorModel>.of(authors)..remove(author));
   }
 }
