@@ -22,6 +22,11 @@ jobs:
         with:
           channel: stable
           flutter-version: '3.16.0'
+          cache: true
+          cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+          cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+          pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
+          pub-cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
 
       - name: Install dependencies
         run: flutter pub get
