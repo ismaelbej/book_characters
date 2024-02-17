@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/failure.dart';
 import '../../../domain/entities/author.dart';
 import '../../../services/providers.dart';
 import 'authors_page_state.dart';
@@ -10,20 +12,27 @@ class AuthorsPageController extends AsyncNotifier<AuthorsPageState> {
   AuthorsPageController();
 
   @override
-  FutureOr<AuthorsPageState> build() {
-    return const AuthorsPageState(authors: <Author>[]);
+  FutureOr<AuthorsPageState> build() async {
+    final result = await _fetchAuthors();
+    return result.fold(
+      (failure) => const AuthorsPageState(authors: <Author>[]),
+      (authors) => AuthorsPageState(authors: authors),
+    );
   }
 
   Future<void> getAuthors() async {
     await _loadAuthors();
   }
 
-  Future<void> _loadAuthors() async {
+  Future<Either<Failure, List<Author>>> _fetchAuthors() {
     final getAuthorsUseCase = ref.read(getAuthorsUseCaseProvider);
+    return getAuthorsUseCase();
+  }
 
+  Future<void> _loadAuthors() async {
     state = const AsyncLoading();
 
-    final result = await getAuthorsUseCase();
+    final result = await _fetchAuthors();
 
     state = result.fold(
       (failure) => AsyncValue.error(failure, StackTrace.current),
