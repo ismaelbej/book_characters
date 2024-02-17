@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/author.dart';
-import '../../services/providers.dart';
+import '../../../domain/entities/author.dart';
+import '../../../services/providers.dart';
 import 'authors_page_state.dart';
 
 class AuthorsPageController extends AsyncNotifier<AuthorsPageState> {

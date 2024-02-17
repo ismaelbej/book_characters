@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/author.dart';
-import '../../presentation/controllers.dart';
+import '../controllers/controllers.dart';
 
 class AuthorsPage extends ConsumerWidget {
   const AuthorsPage({super.key});
