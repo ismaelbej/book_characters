@@ -22,10 +22,10 @@ void main() {
     });
 
     test("should return true to remove an author", () async {
-      const expected = Left(true);
+      const expected = Right(true);
 
       when(() => authorsRepository.removeAuthor(author))
-          .thenAnswer((invocation) => Future.value(const Left(true)));
+          .thenAnswer((invocation) => Future.value(const Right(true)));
 
       final result = await removeAuthorUseCase(author);
 

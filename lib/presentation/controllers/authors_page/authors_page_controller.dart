@@ -15,6 +15,10 @@ class AuthorsPageController extends AsyncNotifier<AuthorsPageState> {
   }
 
   Future<void> getAuthors() async {
+    await _loadAuthors();
+  }
+
+  Future<void> _loadAuthors() async {
     final getAuthorsUseCase = ref.read(getAuthorsUseCaseProvider);
 
     state = const AsyncLoading();
@@ -22,51 +26,35 @@ class AuthorsPageController extends AsyncNotifier<AuthorsPageState> {
     final result = await getAuthorsUseCase();
 
     state = result.fold(
+      (failure) => AsyncValue.error(failure, StackTrace.current),
       (authors) => AsyncValue.data(AuthorsPageState(authors: authors)),
-      (exception) => AsyncValue.error(exception, StackTrace.current),
     );
   }
 
   Future<void> addAuthor(Author author) async {
-    final getAuthorsUseCase = ref.read(getAuthorsUseCaseProvider);
     final addAuthorUseCase = ref.read(addAuthorUseCaseProvider);
 
     final addResult = await addAuthorUseCase(author);
     addResult.fold(
-      (added) async {
-        state = const AsyncLoading();
-
-        final result = await getAuthorsUseCase();
-
-        state = result.fold(
-          (authors) => AsyncValue.data(AuthorsPageState(authors: authors)),
-          (exception) => AsyncValue.error(exception, StackTrace.current),
-        );
+      (failure) {
+        state = AsyncValue.error(failure, StackTrace.current);
       },
-      (exception) {
-        state = AsyncValue.error(exception, StackTrace.current);
+      (added) async {
+        await _loadAuthors();
       },
     );
   }
 
   Future<void> removeAuthor(Author author) async {
-    final getAuthorsUseCase = ref.read(getAuthorsUseCaseProvider);
     final removeAuthorUseCase = ref.read(removeAuthorUseCaseProvider);
 
     final removeResult = await removeAuthorUseCase(author);
     removeResult.fold(
-      (removed) async {
-        state = const AsyncLoading();
-
-        final result = await getAuthorsUseCase();
-
-        state = result.fold(
-          (authors) => AsyncValue.data(AuthorsPageState(authors: authors)),
-          (exception) => AsyncValue.error(exception, StackTrace.current),
-        );
+      (failure) {
+        state = AsyncValue.error(failure, StackTrace.current);
       },
-      (exception) {
-        state = AsyncValue.error(exception, StackTrace.current);
+      (removed) async {
+        await _loadAuthors();
       },
     );
   }

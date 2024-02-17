@@ -1,9 +1,10 @@
 import 'package:either_dart/either.dart';
 
-import '../datasources/authors_datasource.dart';
-import '../models/author_model.dart';
+import '../../core/failure.dart';
 import '../../domain/entities/author.dart';
 import '../../domain/repositories/authors_repository.dart';
+import '../datasources/authors_datasource.dart';
+import '../models/author_model.dart';
 
 class AuthorsRepositoryImpl implements AuthorsRepository {
   const AuthorsRepositoryImpl({required this.authorsDatasource});
@@ -11,34 +12,34 @@ class AuthorsRepositoryImpl implements AuthorsRepository {
   final AuthorsDatasource authorsDatasource;
 
   @override
-  Future<Either<List<Author>, Exception>> getAuthors() async {
+  Future<Either<Failure, List<Author>>> getAuthors() async {
     try {
       final authors = await authorsDatasource.getAuthors();
-      return Left(authors.map((model) => model.toAuthor()).toList());
+      return Right(authors.map((model) => model.toAuthor()).toList());
     } on Exception catch (ex) {
-      return Right(ex);
+      return Left(Failure(ex.toString()));
     }
   }
 
   @override
-  Future<Either<bool, Exception>> addAuthor(Author author) async {
+  Future<Either<Failure, bool>> addAuthor(Author author) async {
     try {
       final result =
           await authorsDatasource.addAuthor(AuthorModel.fromAuthor(author));
-      return Left(result);
+      return Right(result);
     } on Exception catch (ex) {
-      return Right(ex);
+      return Left(Failure(ex.toString()));
     }
   }
 
   @override
-  Future<Either<bool, Exception>> removeAuthor(Author author) async {
+  Future<Either<Failure, bool>> removeAuthor(Author author) async {
     try {
       final result =
           await authorsDatasource.removeAuthor(AuthorModel.fromAuthor(author));
-      return Left(result);
+      return Right(result);
     } on Exception catch (ex) {
-      return Right(ex);
+      return Left(Failure(ex.toString()));
     }
   }
 }

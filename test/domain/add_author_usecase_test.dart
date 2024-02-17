@@ -21,10 +21,10 @@ void main() {
     });
 
     test("should return true for adding a new author", () async {
-      const expected = Left(true);
+      const expected = Right(true);
 
       when(() => authorsRepository.addAuthor(author))
-          .thenAnswer((invocation) => Future.value(const Left(true)));
+          .thenAnswer((invocation) => Future.value(const Right(true)));
 
       final result = await addAuthorUseCase(author);
 

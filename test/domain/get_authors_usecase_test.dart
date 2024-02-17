@@ -22,10 +22,10 @@ void main() {
     });
 
     test("should return authors list", () async {
-      const expected = Left(<Author>[author]);
+      const expected = Right(<Author>[author]);
 
       when(() => authorsRepository.getAuthors()).thenAnswer(
-          (invocation) => Future.value(const Left(<Author>[author])));
+          (invocation) => Future.value(const Right(<Author>[author])));
 
       final result = await getAuthorsUseCase();
 

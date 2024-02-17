@@ -1,6 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:stories_characters/core/failure.dart';
 import 'package:stories_characters/data/datasources/authors_datasource.dart';
 import 'package:stories_characters/data/models/author_model.dart';
 import 'package:stories_characters/data/respositories/authors_repository_impl.dart';
@@ -24,7 +25,7 @@ void main() {
     });
 
     test("should return true to add an author", () async {
-      const expected = Left(true);
+      const expected = Right(true);
 
       when(() => authorsDatasource.addAuthor(authorModel))
           .thenAnswer((invocation) => Future.value(true));
@@ -36,7 +37,7 @@ void main() {
     });
 
     test("should return true to remove an author", () async {
-      const expected = Left(true);
+      const expected = Right(true);
 
       when(() => authorsDatasource.removeAuthor(authorModel))
           .thenAnswer((invocation) => Future.value(true));
@@ -48,15 +49,15 @@ void main() {
     });
 
     test("should return all authors", () async {
-      const expected = Left(<Author>[author]);
+      const expected = Right<Failure, List<Author>>(<Author>[author]);
 
       when(() => authorsDatasource.getAuthors())
           .thenAnswer((invocation) => Future.value(<AuthorModel>[authorModel]));
 
       final result = await authorsRepository.getAuthors();
 
-      expect(result.isLeft, expected.isLeft);
-      expect(result.left, expected.left);
+      expect(result.isRight, expected.isRight);
+      expect(result.right, expected.right);
       verify(() => authorsDatasource.getAuthors()).called(1);
     });
   });

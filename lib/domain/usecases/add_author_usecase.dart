@@ -1,5 +1,6 @@
 import 'package:either_dart/either.dart';
 
+import '../../core/failure.dart';
 import '../entities/author.dart';
 import '../repositories/authors_repository.dart';
 
@@ -8,7 +9,7 @@ class AddAuthorUseCase {
 
   AddAuthorUseCase({required this.authorsRepository});
 
-  Future<Either<bool, Exception>> call(Author author) async {
+  Future<Either<Failure, bool>> call(Author author) async {
     return authorsRepository.addAuthor(author);
   }
 }
