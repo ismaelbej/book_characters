@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/author.dart';
 import '../controllers/controllers.dart';
 import '../widgets/author_tile.dart';
+import 'author_page.dart';
 
 class AuthorsPage extends ConsumerWidget {
   const AuthorsPage({super.key});
@@ -17,8 +18,18 @@ class AuthorsPage extends ConsumerWidget {
       ),
       body: state.when(
         data: (state) => ListView.builder(
-          itemBuilder: (BuildContext context, int index) =>
-              AuthorTile(author: state.authors[index]),
+          itemBuilder: (BuildContext context, int index) => InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      AuthorPage(author: state.authors[index]),
+                ),
+              );
+            },
+            child: AuthorTile(author: state.authors[index]),
+          ),
           itemCount: state.authors.length,
         ),
         error: (error, _) => Text('$error'),
