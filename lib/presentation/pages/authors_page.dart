@@ -12,6 +12,9 @@ class AuthorsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(authorsPageController);
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Authors"),
+      ),
       body: state.when(
         data: (state) => ListView.builder(
           itemBuilder: (BuildContext context, int index) =>
