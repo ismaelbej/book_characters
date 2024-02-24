@@ -13,7 +13,7 @@ void main() {
 
     late AuthorsRepository authorsRepository;
 
-    const author = Author(name: "name", image: "image");
+    const author = Author(id: "1234", name: "name", image: "image");
 
     setUp(() {
       authorsRepository = MockAuthorsRepository();

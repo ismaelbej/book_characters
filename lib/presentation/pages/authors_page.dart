@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../domain/entities/author.dart';
 import '../controllers/controllers.dart';
 import '../widgets/author_tile.dart';
 import 'author_page.dart';
+
+const uuid = Uuid();
 
 class AuthorsPage extends ConsumerWidget {
   const AuthorsPage({super.key});
@@ -37,7 +40,8 @@ class AuthorsPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          const author = Author(name: "hello", image: "image");
+          final id = uuid.v4();
+          final author = Author(id: id, name: "hello", image: "image");
 
           ref.read(authorsPageController.notifier).addAuthor(author);
         },

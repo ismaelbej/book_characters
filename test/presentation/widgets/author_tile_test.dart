@@ -5,7 +5,7 @@ import 'package:stories_characters/presentation/widgets/author_tile.dart';
 
 void main() {
   group("AuthorTile", () {
-    const author = Author(name: "name", image: "image");
+    const author = Author(id: "1234", name: "name", image: "image");
 
     Future<void> createWidget(WidgetTester tester) async {
       return tester.pumpWidget(
