@@ -19,12 +19,17 @@ class AuthorPage extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 48,
-                    backgroundColor: Colors.lightBlue[100],
-                    child: Text(
-                      author.name[0].toUpperCase(),
-                      style: Theme.of(context).textTheme.displayMedium,
+                  SizedBox.square(
+                    dimension: 96,
+                    child: Center(
+                      child: CircleAvatar(
+                        radius: 32,
+                        backgroundColor: Colors.lightBlue[100],
+                        child: Text(
+                          author.name[0].toUpperCase(),
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox.square(dimension: 16.0),

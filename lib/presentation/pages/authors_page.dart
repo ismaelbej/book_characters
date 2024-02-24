@@ -9,6 +9,8 @@ import 'author_page.dart';
 
 const uuid = Uuid();
 
+int i = 0;
+
 class AuthorsPage extends ConsumerWidget {
   const AuthorsPage({super.key});
 
@@ -31,7 +33,15 @@ class AuthorsPage extends ConsumerWidget {
                 ),
               );
             },
-            child: AuthorTile(author: state.authors[index]),
+            child: Dismissible(
+              key: ValueKey(state.authors[index]),
+              onDismissed: (direction) {
+                ref
+                    .read(authorsPageController.notifier)
+                    .removeAuthor(state.authors[index]);
+              },
+              child: AuthorTile(author: state.authors[index]),
+            ),
           ),
           itemCount: state.authors.length,
         ),
@@ -41,7 +51,7 @@ class AuthorsPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final id = uuid.v4();
-          final author = Author(id: id, name: "hello", image: "image");
+          final author = Author(id: id, name: "hello ${i++}", image: "image");
 
           ref.read(authorsPageController.notifier).addAuthor(author);
         },
