@@ -11,6 +11,17 @@ class Author extends Equatable {
     required this.image,
   });
 
+  Author copyWith({
+    String? id,
+    String? name,
+    String? image,
+  }) =>
+      Author(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        image: image ?? this.image,
+      );
+
   @override
   List<Object> get props => [id, name, image];
 

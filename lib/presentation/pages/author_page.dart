@@ -10,39 +10,40 @@ class AuthorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(author.name.isEmpty ? "Author" : author.name),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  SizedBox.square(
-                    dimension: 96,
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 32,
-                        backgroundColor: Colors.lightBlue[100],
-                        child: Text(
-                          author.name[0].toUpperCase(),
-                          style: Theme.of(context).textTheme.displayMedium,
-                        ),
+      appBar: AppBar(
+        title: Text(author.name.isEmpty ? "Author" : author.name),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                SizedBox.square(
+                  dimension: 96,
+                  child: Center(
+                    child: CircleAvatar(
+                      radius: 32,
+                      backgroundColor: Colors.lightBlue[100],
+                      child: Text(
+                        author.name[0].toUpperCase(),
+                        style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ),
                   ),
-                  const SizedBox.square(dimension: 16.0),
-                  Expanded(
-                    child: Text(
-                      author.name,
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
+                ),
+                const SizedBox.square(dimension: 16.0),
+                Expanded(
+                  child: Text(
+                    author.name,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
-                ],
-              )
-            ],
-          ),
-        ));
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

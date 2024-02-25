@@ -1,7 +1,7 @@
 import '../../../domain/entities/author.dart';
 
-class AuthorsPageState {
+class AuthorsState {
   final List<Author> authors;
 
-  const AuthorsPageState({required this.authors});
+  const AuthorsState({required this.authors});
 }
