@@ -40,7 +40,7 @@ class LocalAuthorsDatasource implements AuthorsDatasource {
     return authors.then(
       (authors) => _authorsPreference.then(
         (authorsPreference) => authorsPreference.setValue(
-          List<AuthorModel>.of(authors)..add(author),
+          [...authors, author],
         ),
       ),
     );
@@ -58,17 +58,20 @@ class LocalAuthorsDatasource implements AuthorsDatasource {
   }
 
   @override
-  Future<bool> updateAuthor(AuthorModel author) {
-    return authors.then(
+  Future<bool> updateAuthor(AuthorModel author) async {
+    final result = authors.then(
       (authors) => _authorsPreference.then(
         (authorsPreference) => authorsPreference.setValue(
-          List<AuthorModel>.of(authors)
-            ..map(
-              (model) => model.id == author.id ? author : model,
-            ),
+          authors
+              .map(
+                (model) => model.id == author.id ? author : model,
+              )
+              .toList(),
         ),
       ),
     );
+
+    return result;
   }
 
   @override

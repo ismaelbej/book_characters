@@ -17,13 +17,13 @@ class _EditAuthorPageState extends ConsumerState<EditAuthorPage> {
 
   late Author _author;
 
-  final nameController = TextEditingController();
+  late final TextEditingController nameController;
 
   @override
   void initState() {
     _author =
         widget.author ?? ref.read(authorsPageController.notifier).newAuthor();
-    nameController.text = _author.name;
+    nameController = TextEditingController(text: _author.name)..addListener(_onNameChanged);
     super.initState();
   }
 
@@ -31,6 +31,12 @@ class _EditAuthorPageState extends ConsumerState<EditAuthorPage> {
   void dispose() {
     nameController.dispose();
     super.dispose();
+  }
+
+  _onNameChanged() {
+    setState(() {
+      _author = _author.copyWith(name: nameController.text);
+    });
   }
 
   @override
@@ -54,7 +60,7 @@ class _EditAuthorPageState extends ConsumerState<EditAuthorPage> {
                         radius: 32,
                         backgroundColor: Colors.lightBlue[100],
                         child: Text(
-                          "",
+                          _author.name.isNotEmpty ? _author.name[0] : "",
                           style: Theme.of(context).textTheme.displayMedium,
                         ),
                       ),
@@ -69,9 +75,6 @@ class _EditAuthorPageState extends ConsumerState<EditAuthorPage> {
                         labelText: 'Name',
                       ),
                       style: Theme.of(context).textTheme.displayMedium,
-                      onChanged: (name) {
-                        _author = _author.copyWith(name: name);
-                      },
                     ),
                   ),
                 ],

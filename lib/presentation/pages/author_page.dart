@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/author.dart';
+import 'edit_author_page.dart';
 
 class AuthorPage extends StatelessWidget {
   final Author author;
@@ -43,6 +44,17 @@ class AuthorPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditAuthorPage(author: author),
+            ),
+          );
+        },
+        child: const Icon(Icons.edit),
       ),
     );
   }
