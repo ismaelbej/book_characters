@@ -62,6 +62,20 @@ void main() {
       verify(() => preferenceAuthors.setValue([])).called(1);
     });
 
+    test("should return true to update an author", () async {
+      const expected = true;
+
+      when(() => preferenceAuthors.getValue()).thenReturn([authorModel]);
+      when(() => preferenceAuthors.setValue([authorModel]))
+          .thenAnswer((invocation) => Future.value(true));
+
+      final result = await authorsDatasource.updateAuthor(authorModel);
+
+      expect(result, expected);
+      verify(() => preferenceAuthors.getValue()).called(1);
+      verify(() => preferenceAuthors.setValue([authorModel])).called(1);
+    });
+
     test("should return all authors", () async {
       const expected = [authorModel];
 

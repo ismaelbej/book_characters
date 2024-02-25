@@ -37,9 +37,36 @@ class LocalAuthorsDatasource implements AuthorsDatasource {
 
   @override
   Future<bool> addAuthor(AuthorModel author) async {
-    return _authorsPreference.then(
-      (authorsPreference) => authorsPreference.setValue(
-        List<AuthorModel>.of(authorsPreference.getValue())..add(author),
+    return authors.then(
+      (authors) => _authorsPreference.then(
+        (authorsPreference) => authorsPreference.setValue(
+          List<AuthorModel>.of(authors)..add(author),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Future<bool> removeAuthor(AuthorModel author) async {
+    return authors.then(
+      (authors) => _authorsPreference.then(
+        (authorsPreference) => authorsPreference.setValue(
+          List<AuthorModel>.of(authors)..remove(author),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Future<bool> updateAuthor(AuthorModel author) {
+    return authors.then(
+      (authors) => _authorsPreference.then(
+        (authorsPreference) => authorsPreference.setValue(
+          List<AuthorModel>.of(authors)
+            ..map(
+              (model) => model.id == author.id ? author : model,
+            ),
+        ),
       ),
     );
   }
@@ -47,14 +74,5 @@ class LocalAuthorsDatasource implements AuthorsDatasource {
   @override
   Future<List<AuthorModel>> getAuthors() async {
     return authors;
-  }
-
-  @override
-  Future<bool> removeAuthor(AuthorModel author) async {
-    return _authorsPreference.then(
-          (authorsPreference) => authorsPreference.setValue(
-        List<AuthorModel>.of(authorsPreference.getValue())..remove(author),
-      ),
-    );
   }
 }

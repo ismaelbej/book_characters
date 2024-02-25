@@ -16,7 +16,7 @@ void main() {
     late AuthorsDatasource authorsDatasource;
 
     const author = Author(id: "1234", name: "name", image: "image");
-    const authorModel = AuthorModel(id: "1234", name: "name", image: "image");
+    final authorModel = AuthorModel.fromAuthor(author);
 
     setUp(() {
       authorsDatasource = MockAuthorsDatasource();
@@ -46,6 +46,18 @@ void main() {
 
       expect(result, expected);
       verify(() => authorsDatasource.removeAuthor(authorModel)).called(1);
+    });
+
+    test("should return return true for updating an author", () async {
+      const expected = Right(true);
+
+      when(() => authorsDatasource.updateAuthor(authorModel))
+          .thenAnswer((invocation) => Future.value(true));
+
+      final result = await authorsRepository.updateAuthor(author);
+
+      expect(result, expected);
+      verify(() => authorsDatasource.updateAuthor(authorModel)).called(1);
     });
 
     test("should return all authors", () async {

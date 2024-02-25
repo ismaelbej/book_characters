@@ -4,4 +4,5 @@ abstract class AuthorsDatasource {
   Future<List<AuthorModel>> getAuthors();
   Future<bool> addAuthor(AuthorModel author);
   Future<bool> removeAuthor(AuthorModel author);
+  Future<bool> updateAuthor(AuthorModel author);
 }

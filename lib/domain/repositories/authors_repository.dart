@@ -9,4 +9,6 @@ abstract class AuthorsRepository {
   Future<Either<Failure, bool>> addAuthor(Author author);
 
   Future<Either<Failure, bool>> removeAuthor(Author author);
+
+  Future<Either<Failure, bool>> updateAuthor(Author author);
 }

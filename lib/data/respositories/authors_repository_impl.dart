@@ -42,4 +42,15 @@ class AuthorsRepositoryImpl implements AuthorsRepository {
       return Left(Failure(ex.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> updateAuthor(Author author) async {
+    try {
+      final result =
+          await authorsDatasource.updateAuthor(AuthorModel.fromAuthor(author));
+      return Right(result);
+    } on Exception catch (ex) {
+      return Left(Failure(ex.toString()));
+    }
+  }
 }
